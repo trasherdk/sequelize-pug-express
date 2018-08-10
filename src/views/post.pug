@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 #{article.title}
+  hr
+  p.card-text #{article.text}
+  p.card-title Author: #{article.author}
+  p.card-title Created at: #{article.createdAt}
+  hr
+  a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.id) Edit
+  a.btn.btn-outline-primary(href="/") Back

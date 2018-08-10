@@ -1,2 +1,1 @@
-# express-sequelize
-Express sequelize boilerplate
+# Boilerplate Express Sequelize

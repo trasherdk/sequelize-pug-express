@@ -1,6 +1,6 @@
 {
   "name": "express-sequelize",
-  "version": "1.0.0",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "start": "nodemon ./src/bin/www --exec \"npm run lint && node\"",
@@ -10,9 +10,13 @@
   },
   "dependencies": {
     "compression": "^1.7.3",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "mysql2": "^1.6.1",

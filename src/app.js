@@ -1,27 +1,44 @@
-var createError = require('http-errors')
-var compression = require('compression')
+const createError = require('http-errors')
+const compression = require('compression')
 const favicon = require('serve-favicon')
-var express = require('express')
-var path = require('path')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
+const session = require('express-session')
+const express = require('express')
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
 
-var indexRouter = require('./routes/index')
-var blogRouter = require('./routes/blog')
+const indexRouter = require('./routes/index')
+const blogRouter = require('./routes/blog')
 
-var app = express()
+const app = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
 app.use(compression())
+
 app.use(logger('dev'))
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+
+app.use(cookieParser())
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}))
+
+// Express Messages
+app.use(require('connect-flash')())
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
 app.use('/', indexRouter)
 app.use('/blog', blogRouter)

@@ -7,6 +7,7 @@ module.exports = (sequelize, type) => {
     },
     author: type.STRING,
     title: type.STRING,
-    text: type.TEXT
+    text: type.TEXT,
+    active: { type: type.BOOLEAN, defaultValue: true }
   })
 }

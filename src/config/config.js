@@ -2,7 +2,7 @@ module.exports = {
   development: {
     dialect: 'sqlite',
     operatorsAliases: false,
-    storage: './database.sqlite'
+    storage: './data/database.sqlite'
   },
   production: {
     username: 'admin',

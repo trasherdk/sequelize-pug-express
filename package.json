@@ -1,21 +1,24 @@
 {
-  "name": "bes",
-  "version": "0.0.0",
+  "name": "express-sequelize",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon src/app.js --exec \"npm run lint && node\"",
-    "lint": "eslint src/**/*.js",
-    "fix": "eslint --fix src/**/*.js"
+    "start": "nodemon ./src/bin/www --exec \"npm run lint && node\"",
+    "develop": "DEBUG=express:* nodemon ./src/bin/www --exec \"npm run lint && node\"",
+    "lint": "eslint ./src/*.js ./src/**/*.js",
+    "fix": "eslint --fix ./src/*.js ./src/**/*.js"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
     "cookie-parser": "~1.4.3",
-    "debug": "^3.1.0",
+    "debug": "~2.6.9",
     "express": "~4.16.0",
-    "http-errors": "^1.7.0",
+    "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
-    "pug": "^2.0.3",
+    "mysql2": "^1.6.1",
+    "pug": "2.0.0-beta11",
     "sequelize": "^4.38.0",
+    "serve-favicon": "^2.5.0",
     "sqlite3": "^4.0.2"
   },
   "devDependencies": {

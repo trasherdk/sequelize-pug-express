@@ -1,8 +1,8 @@
-extends layout
+extends ../layout
 
 block content
   h1 #{title}
-  form(action='/add',method="POST")
+  form(action='/blog/add',method="POST")
     .form-group
       label(for='author') Author
       input#author.form-control(type='text',name='author')

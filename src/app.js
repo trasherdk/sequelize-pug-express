@@ -1,54 +1,45 @@
-'use strict'
-const cookieParser = require('cookie-parser')
-const createError = require('http-errors')
-const express = require('express')
-const logger = require('morgan')
-const path = require('path')
-const fs = require('fs')
-const app = express()
+var createError = require('http-errors')
+var compression = require('compression')
+const favicon = require('serve-favicon')
+var express = require('express')
+var path = require('path')
+var cookieParser = require('cookie-parser')
+var logger = require('morgan')
 
-// Config file
-const config = require('./config')
+var indexRouter = require('./routes/index')
+var blogRouter = require('./routes/blog')
 
-// View engine setup
+var app = express()
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
-// Public folder
-app.use(express.static(path.join(__dirname, 'public')))
 
-// Console log
-if (config.logConsole) {
-  app.use(logger('dev'))
-}
-// Create a write stream (in append mode)
-if (config.logFile) {
-  app.use(logger(
-    '[:remote-user] [:date[clf]] - [:method(HTTP/:http-version)] - [":url"] - [:status] - [:remote-addr] - ":user-agent" - [:response-time ms] - [:res[content-length]]', { stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' }) }
-  ))
-}
-
+app.use(compression())
+app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
-// Routes
-require('./routes')(app)
+app.use('/', indexRouter)
+app.use('/blog', blogRouter)
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use(function (req, res, next) {
   next(createError(404))
 })
 
 // error handler
-app.use((err, req, res, next) => {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
+
   // render the error page
   res.status(err.status || 500)
   res.render('error')
 })
 
-app.listen(config.port, config.host, () => {
-  console.log('Server started on: https://' + config.host + ':' + config.port)
-})
+module.exports = app

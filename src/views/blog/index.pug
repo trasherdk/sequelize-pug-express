@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h1 #{title}
+  ul.list-group
+    each article in articles
+      li.list-group-item
+        a.float-left(href="/blog/"+article.id) #{article.title}
+        button.btn.btn-outline-danger.btn-sm.float-right.delete-article(data-id=article.id, type="button") Delete
+  hr
+  a.btn.btn-primary(href="/blog/add/") Add Article

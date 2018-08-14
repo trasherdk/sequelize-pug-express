@@ -40,6 +40,8 @@ sequelize.sync({ force: false })
 
 module.exports = Blog
 
+module.exports.sequelize = sequelize
+
 /*
 const User = sequelize.define('user', {
   firstName: {

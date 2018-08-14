@@ -1,3 +1,4 @@
+'use strict'
 const createError = require('http-errors')
 const compression = require('compression')
 const favicon = require('serve-favicon')
@@ -8,7 +9,6 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 
 const indexRouter = require('./routes/index')
-const blogRouter = require('./routes/blog')
 
 const app = express()
 
@@ -41,7 +41,6 @@ app.use(function (req, res, next) {
 })
 
 app.use('/', indexRouter)
-app.use('/blog', blogRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

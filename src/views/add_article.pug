@@ -1,0 +1,22 @@
+extends layout
+
+block title
+  h1.my-4 #{title}
+
+block content
+  form(action='/add',method="POST")
+    .form-group
+      label(for='author') Author
+      input#author.form-control(type='text',name='author')
+    .form-group
+      label(for='author') Title
+      input#author.form-control(type='text',name='title')
+    .form-group
+      label(for='text') Text Chort
+      textarea#text.form-control(rows='5',name='text')
+    .form-group
+      label(for='textFull') Text Full
+      textarea#text.form-control(rows='10',name='textFull')
+    button.btn.btn-primary(type='submit') Add Articles
+
+block widget

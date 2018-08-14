@@ -1,0 +1,56 @@
+extends layout
+
+block title
+  // Title
+  h1.my-4 #{article.title}
+
+block content
+  // Author
+  p.lead by 
+    a(href='/') #{article.author}
+  hr
+  // Date/Time
+  p Posted on #{article.createdAt}
+  hr
+  // Preview Image
+  img.img-fluid.rounded(src='https://placehold.it/900x300', alt='')
+  hr
+  // Post Content
+  p #{article.textFull}
+  hr
+  // Comments Form
+  .card.my-4
+    h5.card-header Leave a Comment:
+    .card-body
+      form
+        .form-group
+          textarea.form-control(rows='3')
+        button.btn.btn-primary(type='submit') Submit
+  // Single Comment
+  //.media.mb-4
+    img.d-flex.mr-3.rounded-circle(src='http://placehold.it/50x50', alt='')
+    .media-body
+      h5.mt-0 Commenter Name
+      |               Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+  // Comment with nested comments
+  //.media.mb-4
+    img.d-flex.mr-3.rounded-circle(src='http://placehold.it/50x50', alt='')
+    .media-body
+      h5.mt-0 Commenter Name
+      |               Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+      .media.mt-4
+        img.d-flex.mr-3.rounded-circle(src='http://placehold.it/50x50', alt='')
+        .media-body
+          h5.mt-0 Commenter Name
+          |                   Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+      .media.mt-4
+        img.d-flex.mr-3.rounded-circle(src='http://placehold.it/50x50', alt='')
+        .media-body
+          h5.mt-0 Commenter Name
+          |                   Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+block widget
+  a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.id) Edit
+  button.btn.btn-outline-danger.delete-article(data-id=article.id, type="button") Delete
+  //a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.id) Edit
+  

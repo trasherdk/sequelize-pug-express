@@ -1,5 +1,16 @@
 extends layout
+block title
+  //h1.my-4 #{title}
 
 block content
-  h1= title
-  p Welcome to #{title}
+  each article in articles
+    // Blog Post
+    .card.my-4
+      img.card-img-top(src='https://placehold.it/750x300', alt='Card image cap')
+      .card-body
+        h2.card-title 
+          a(href="/"+article.id) #{article.title}
+        p.card-text #{article.text}
+        a.btn.btn-primary(href="/"+article.id) Read More →
+      .card-footer.text-muted Posted on #{article.createdAt} by 
+        a(href='/') #{article.author}

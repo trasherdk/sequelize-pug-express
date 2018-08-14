@@ -1,4 +1,5 @@
-.message
+.message.my-4
   each type in Object.keys(messages)
     each message in messages[type]
       div(class = "alert alert-"+type) #{message}
+        b(style="float:right", onClick="hello(this)") [x]

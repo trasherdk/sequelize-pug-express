@@ -1,4 +1,4 @@
-const Blog = require('../models')
+const {Blog} = require('../models')
 
 module.exports = (req, res) => {
   Blog.update({

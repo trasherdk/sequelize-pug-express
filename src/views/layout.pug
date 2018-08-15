@@ -25,10 +25,10 @@ html(lang='en')
                 | Home
                 span.sr-only (current)
             li.nav-item
-              a.nav-link(href='#') About
-            li.nav-item
+              a.nav-link(href='/register/') Sing(up)
+            //li.nav-item
               a.nav-link(href='#') Services
-            li.nav-item
+            //li.nav-item
               a.nav-link(href='#') Contact
     // Page Content
     .container(style="flex:1 0 auto;")
@@ -42,7 +42,7 @@ html(lang='en')
           if errors
             each error, key in errors
               .alert.alert-danger(class=""+key) #{error.msg}
-                b(style="float:right", onClick="hello(this)") [x]
+                b(style="float:right; cursor:pointer; font-weight: normal", onClick="hello(this)") [x]
           block content
         // Sidebar Widgets Column
         .col-md-4
@@ -53,7 +53,7 @@ html(lang='en')
               .input-group
                 input.form-control(type='text', placeholder='Search for...')
                 span.input-group-btn
-                  button.btn.btn-secondary(type='button') Go!
+                  button.btn.btn-outline-secondary(type='button') Go!
           // Categories Widget
           .card.my-4
             h5.card-header Categories
@@ -80,7 +80,7 @@ html(lang='en')
             h5.card-header Widget
             .card-body
               block widget
-                a.btn.btn-primary(href="/add/") Add Article
+                a.btn.btn-outline-primary(href="/add/") Add Article
       // /.row
     // /.container
     // Footer
@@ -91,7 +91,7 @@ html(lang='en')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
     script.
-      $(".message").fadeTo(5000, 500).slideUp(500, function(){
+      $(".message").fadeTo(3000, 500).slideUp(500, function(){
           $(".message").slideUp(500);
       });
     script.

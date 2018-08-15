@@ -1,11 +1,12 @@
 'use strict'
-
 const Sequelize = require('sequelize')
 const env = process.env.NODE_ENV || 'development'
+
 const config = require('../config/config.js')[env]
 
 // Models
 const BlogModel = require('./Blog')
+const UserModel = require('./User')
 
 let sequelize
 if (config.use_env_variable) {
@@ -24,6 +25,7 @@ sequelize
   })
 
 const Blog = BlogModel(sequelize, Sequelize)
+const User = UserModel(sequelize, Sequelize)
 /*
 Blog.create({
   text: 'Hello'
@@ -38,9 +40,12 @@ sequelize.sync({ force: false })
     console.error('Unable to sync user models to the database:', err)
   })
 
-module.exports = Blog
+module.exports = {
+  Blog,
+  User
+}
 
-module.exports.sequelize = sequelize
+// module.exports.sequelize = sequelize
 
 /*
 const User = sequelize.define('user', {

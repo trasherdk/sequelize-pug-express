@@ -1,0 +1,25 @@
+extends layout
+block title
+  h1.my-4 Register
+
+block content
+  form(action='/register/',method="POST")
+    .form-group
+      label(for='username') UserName 
+        span(style="color:red") (*)
+      input#username.form-control(type='text',name='username')
+    .form-group
+      label(for='name') Name
+      input#name.form-control(type='text',name='name')
+    .form-group
+      label(for='email') Email 
+        span(style="color:red") (*)
+      input#email.form-control(type='email',name='email')
+    .form-group
+      label(for='password') Password 
+        span(style="color:red") (*)
+      input#password.form-control(type='password',name='password')
+      label(for='password2') Confirm your Password
+        span(style="color:red") (*)
+      input#password2.form-control(type='password',name='password2')
+    button.btn.btn-outline-primary(type='submit') Register

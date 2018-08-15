@@ -7,16 +7,20 @@ block content
   form(action='/add',method="POST")
     .form-group
       label(for='author') Author
+        span(style="color:red") (*)
       input#author.form-control(type='text',name='author')
     .form-group
       label(for='author') Title
+        span(style="color:red") (*)
       input#author.form-control(type='text',name='title')
     .form-group
       label(for='text') Text Chort
+        span(style="color:red") (*)
       textarea#text.form-control(rows='5',name='text')
     .form-group
       label(for='textFull') Text Full
+        span(style="color:red") (*)
       textarea#text.form-control(rows='10',name='textFull')
-    button.btn.btn-primary(type='submit') Add Articles
+    button.btn.btn-outline-primary(type='submit') Add Articles
 
 block widget

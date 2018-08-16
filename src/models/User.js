@@ -24,9 +24,7 @@ module.exports = (sequelize, Sequelize) => {
     }
   })
   User.prototype.comparePassword = function (password) {
-    return bcrypt.compare(password, this.password, function (err, res) {
-      console.log(err)
-      console.log('res: ' + res)
+    return bcrypt.compare(password, this.password).then((res) => {
       return res
     })
   }

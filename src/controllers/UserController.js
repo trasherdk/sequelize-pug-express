@@ -1,4 +1,3 @@
-const { validationResult } = require('express-validator/check')
 const createError = require('http-errors')
 // const bcrypt = require('bcryptjs')
 const { User } = require('../models')
@@ -8,22 +7,15 @@ module.exports.register = {
     res.render('register')
   },
   async Post (req, res, next) {
-    const error = validationResult(req)
-    if (!error.isEmpty()) {
-      res.render('register', {
-        errors: error.array()
+    try {
+      await User.create(req.body)
+      req.flash('success', 'New User Created')
+      res.redirect('/')
+      User.findAll({}).then(users => {
+        console.log(users)
       })
-    } else {
-      try {
-        await User.create(req.body)
-        req.flash('success', 'New User Created')
-        res.redirect('/')
-        User.findAll({}).then(users => {
-          console.log(users)
-        })
-      } catch (err) {
-        next(createError(err))
-      }
+    } catch (err) {
+      next(createError(err))
     }
   }
 }
@@ -33,27 +25,24 @@ module.exports.login = {
     res.render('login')
   },
   async Post (req, res, next) {
-    const error = validationResult(req)
-    if (!error.isEmpty()) {
-      res.render('login', {
-        errors: error.array()
-      })
-    } else {
-      try {
-        const { email, password } = req.body
-        const user = await User.findOne({ where: { email: email } })
-        if (!user) {
-          res.render('login', {
-            errors: error.array()
-          })
-        }
-        const isPasswordValid = await user.comparePassword(password)
-        console.log(isPasswordValid)
-        req.flash('success', 'Login Success')
-        res.redirect('/')
-      } catch (err) {
-        next(createError(err))
+    try {
+      const { email, password } = req.body
+      const user = await User.findOne({ where: { email: email } })
+      if (!user) {
+        return res.render('login', {
+          error: 'The login information was incorrect1'
+        })
       }
+      const isPasswordValid = await user.comparePassword(password)
+      if (!isPasswordValid) {
+        return res.render('login', {
+          error: 'The login information was incorrect2'
+        })
+      }
+      req.flash('success', 'Login Success')
+      res.redirect('/')
+    } catch (err) {
+      next(createError(err))
     }
   }
 }

@@ -1,50 +1,32 @@
 var express = require('express')
 var router = express.Router()
 
-const { check } = require('express-validator/check')
 const IndexController = require('../controllers/IndexController')
 const UserController = require('../controllers/UserController')
 const BlogController = require('../controllers/BlogController')
+const validation = require('./validation')
 
 // Index page
 router.get('/', IndexController.index)
 
 // User Registration
 router.get('/register', UserController.register.Get)
-router.post('/register', [
-  check('username').isLength({min: 1, max: 250}).withMessage('UserName is required.'),
-  check('email').isLength({min: 3, max: 250}).withMessage('Email is required.').isEmail().withMessage('Please provide a valid email address').normalizeEmail(),
-  check('password').isLength({ min: 6 }).withMessage('Invalid password. Password must be at least minimum 6'),
-  check('password2').exists().custom((value, { req }) => value === req.body.password).withMessage('"Confirm your Password" field must have the same value as the Password field')
-], UserController.register.Post)
+router.post('/register', validation.register, UserController.register.Post)
 
 // User Login
 router.get('/login', UserController.login.Get)
-router.post('/login', [
-  check('email').isLength({min: 3, max: 250}).withMessage('Email is required.').isEmail().withMessage('Please provide a valid email address').normalizeEmail(),
-  check('password').isLength({ min: 6 }).withMessage('Invalid password')
-], UserController.login.Post)
+router.post('/login', validation.login, UserController.login.Post)
 
 // Add Article
 router.get('/add', BlogController.add.Get)
-router.post('/add', [
-  check('author').isLength({min: 1, max: 250}).withMessage('Author is required'),
-  check('title').isLength({min: 1, max: 250}).withMessage('Title is required'),
-  check('text').isLength({min: 1}).withMessage('Text Chort is required'),
-  check('textFull').isLength({min: 1}).withMessage('Text Full is required')
-], BlogController.add.Post)
-
-// Article Page
-router.get('/:id/', IndexController.article)
+router.post('/add', validation.add, BlogController.add.Post)
 
 // Edit Article
 router.get('/edit/:id/', BlogController.edit.Get)
-router.post('/edit/:id/', [
-  check('author').isLength({min: 1, max: 250}).withMessage('Author is required'),
-  check('title').isLength({min: 1, max: 250}).withMessage('Title is required'),
-  check('text').isLength({min: 1}).withMessage('Text Chort is required'),
-  check('textFull').isLength({min: 1}).withMessage('Text Full is required')
-], BlogController.edit.Post)
+router.post('/edit/:id/', validation.edit, BlogController.edit.Post)
+
+// Article Page
+router.get('/:id/', IndexController.article)
 
 // Delete Article
 router.delete('/:id', BlogController.delete)

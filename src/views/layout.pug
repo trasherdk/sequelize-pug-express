@@ -42,10 +42,9 @@ html(lang='en')
               small Secondary Text
           #error
           != messages('message_template', locals)
-          if errors
-            each error, key in errors
-              .alert.alert-danger(class=""+key) #{error.msg}
-                b(style="float:right; cursor:pointer; font-weight: normal", onClick="hello(this)") [x]
+          if error
+            .alert.alert-danger #{error}
+              b(style="float:right; cursor:pointer; font-weight: normal", onClick="hello(this)") [x]
           block content
         // Sidebar Widgets Column
         .col-md-4

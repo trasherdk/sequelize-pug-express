@@ -3,7 +3,7 @@ block title
   h1.my-4 Register
 
 block content
-  form(action='/register/',method="POST")
+  form#form(action='/register/', onsubmit="return validation()", method="POST")
     .form-group
       label(for='username') UserName 
         span(style="color:red") (*)
@@ -17,9 +17,55 @@ block content
       input#email.form-control(type='email',name='email')
     .form-group
       label(for='password') Password 
-        span(style="color:red") (*)
+        span(style="color:red") (*) 
+        small Password must be at least 6 characters in length
       input#password.form-control(type='password',name='password')
-      label(for='password2') Confirm your Password
+    .form-group
+      label(for='password2') Confirm your Password 
         span(style="color:red") (*)
       input#password2.form-control(type='password',name='password2')
     button.btn.btn-outline-primary(type='submit') Register
+    
+block script
+    script.
+      function validation (){
+        var username = $('#username').val();
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var password2 = $('#password2').val();
+        
+        $(".error").remove();
+        
+        function message (message) {
+          $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
+        }
+     
+        if (username.length < 1) {
+          message('UserName is required');
+          return false
+        }
+        if (name.length < 1) {
+          message('Name is required');
+          return false
+        }
+        if (email.length < 1) {
+          message('Email is required');
+          return false
+        } else {
+          var regEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+          var validEmail = regEx.test(email);
+          if (!validEmail) {
+            message('Please provide a valid email address');
+            return false
+          }
+        }
+        if (password.length < 6) {
+          message('Invalid password. Password must be at least minimum 6');
+          return false
+        }
+        if (password != password2){
+          message('"Confirm your Password" field must have the same value as the Password field');
+          return false
+        }
+      }

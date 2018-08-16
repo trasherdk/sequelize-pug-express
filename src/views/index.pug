@@ -9,8 +9,8 @@ block content
       img.card-img-top(src='https://placehold.it/750x300', alt='Card image cap')
       .card-body
         h2.card-title 
-          a(href="/"+article.id) #{article.title}
+          a(href="/"+article.uuid) #{article.title}
         p.card-text #{article.text}
-        a.btn.btn-outline-primary(href="/"+article.id) Read More →
+        a.btn.btn-outline-primary(href="/"+article.uuid) Read More →
       .card-footer.text-muted Posted on #{article.createdAt} by 
         a(href='/') #{article.author}

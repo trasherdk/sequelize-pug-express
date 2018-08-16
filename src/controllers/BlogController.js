@@ -3,6 +3,7 @@ const createError = require('http-errors')
 
 const { Blog } = require('../models')
 
+// Add Article
 module.exports.add = {
   Get (req, res) {
     res.render('add_article', {
@@ -14,7 +15,8 @@ module.exports.add = {
     const error = validationResult(req)
     if (!error.isEmpty()) {
       res.render('add_article', {
-        title: 'Add Article'
+        title: 'Add Article',
+        errors: error.array()
       })
     } else {
       try {
@@ -28,10 +30,11 @@ module.exports.add = {
   }
 }
 
+// Edit Article
 module.exports.edit = {
   async Get (req, res, next) {
     try {
-      const article = await Blog.findAll({ where: { active: true, id: req.params.id } })
+      const article = await Blog.findAll({ where: { active: true, uuid: req.params.id } })
       res.render('edit_article', {
         article: article[0]
       })
@@ -44,7 +47,7 @@ module.exports.edit = {
     const err = validationResult(req)
     if (!err.isEmpty()) {
       try {
-        const article = await Blog.findAll({ where: { active: true, id: req.params.id } })
+        const article = await Blog.findAll({ where: { active: true, uuid: req.params.id } })
         res.render('edit_article', {
           article: article[0],
           errors: err.array()
@@ -54,7 +57,7 @@ module.exports.edit = {
       }
     } else {
       try {
-        await Blog.update(req.body, { where: { id: req.params.id } })
+        await Blog.update(req.body, { where: { uuid: req.params.id } })
         req.flash('success', 'Article Update')
         res.redirect('/' + req.params.id)
       } catch (err) {
@@ -67,7 +70,7 @@ module.exports.edit = {
 // Delete Article
 module.exports.delete = async (req, res, next) => {
   try {
-    await Blog.update({ active: false }, {where: {id: req.params.id}})
+    await Blog.update({ active: false }, {where: {uuid: req.params.id}})
     res.send('success')
   } catch (err) {
     next(createError(err))

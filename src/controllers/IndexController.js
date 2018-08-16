@@ -15,7 +15,7 @@ module.exports = {
   },
   async article (req, res, next) {
     try {
-      const article = await Blog.findAll({ where: { active: true, id: req.params.id } })
+      const article = await Blog.findAll({ where: { active: true, uuid: req.params.id } })
       res.render('article', {
         article: article[0]
       })

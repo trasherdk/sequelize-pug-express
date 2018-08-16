@@ -19,7 +19,7 @@ module.exports.post = (req, res, next) => {
       email: req.body.email,
       password: req.body.password
     })
-    req.flash('success', 'Article Added')
+    req.flash('success', 'New User Created')
     res.redirect('/')
     User.findAll({}).then(users => {
       console.log(users)

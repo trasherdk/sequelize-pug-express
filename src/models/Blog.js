@@ -1,14 +1,14 @@
-module.exports = (sequelize, type) => {
+module.exports = (sequelize, Sequelize) => {
   return sequelize.define('blog', {
-    id: {
-      type: type.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+    uuid: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      primaryKey: true
     },
-    author: type.STRING,
-    title: type.STRING,
-    text: type.TEXT,
-    textFull: type.TEXT,
-    active: { type: type.BOOLEAN, defaultValue: true }
+    author: Sequelize.STRING,
+    title: Sequelize.STRING,
+    text: Sequelize.TEXT,
+    textFull: Sequelize.TEXT,
+    active: { type: Sequelize.BOOLEAN, defaultValue: true }
   })
 }

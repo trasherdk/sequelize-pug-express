@@ -50,6 +50,25 @@ block content
           |                   Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
 
 block widget
-  a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.id) Edit
-  button.btn.btn-outline-danger.delete-article(data-id=article.id, type="button") Delete
+  a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.uuid) Edit
+  button.btn.btn-outline-danger.delete-article(data-id=article.uuid, type="button") Delete
+block script
+  script.
+      $(document).ready(function(){
+        $('.delete-article').on('click', function(e){
+          $target = $(e.target);
+          var id = $target.attr('data-id');
+          $.ajax({
+            type:'DELETE',
+            url: '/'+id,
+            success: function(response){
+              alert('Deleting Article');
+              window.location.href='/';
+            },
+            error: function(err){
+              console.log(err);
+            }
+          });
+        });
+      });
   

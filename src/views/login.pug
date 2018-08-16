@@ -1,13 +1,9 @@
 extends layout
 block title
-  h1.my-4 Register
+  h1.my-4 Login
 
 block content
-  form#form(action='/register/', onsubmit="return validation()", method="POST")
-    .form-group
-      label(for='username') UserName 
-        span(style="color:red") (*)
-      input#username.form-control(type='text',name='username')
+  form#form(action='/login/', onsubmit="return validation()", method="POST")
     .form-group
       label(for='email') Email 
         span(style="color:red") (*)
@@ -17,19 +13,13 @@ block content
         span(style="color:red") (*) 
         small Password must be at least 6 characters in length
       input#password.form-control(type='password',name='password')
-    .form-group
-      label(for='password2') Confirm your Password 
-        span(style="color:red") (*)
-      input#password2.form-control(type='password',name='password2')
-    button.btn.btn-outline-primary(type='submit') Register
-    
+    button.btn.btn-outline-primary(type='submit') Login
+
 block script
     script.
       function validation (){
-        var username = $('#username').val();
         var email = $('#email').val();
         var password = $('#password').val();
-        var password2 = $('#password2').val();
         
         $(".error").remove();
         
@@ -37,10 +27,6 @@ block script
           $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
         }
      
-        if (username.length < 1) {
-          message('UserName is required');
-          return false
-        }
         if (email.length < 1) {
           message('Email is required');
           return false
@@ -53,11 +39,7 @@ block script
           }
         }
         if (password.length < 6) {
-          message('Invalid password. Password must be at least minimum 6');
-          return false
-        }
-        if (password != password2){
-          message('"Confirm your Password" field must have the same value as the Password field');
+          message('Password is required');
           return false
         }
       }

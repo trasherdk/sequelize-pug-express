@@ -14,18 +14,17 @@ module.exports.add = {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const error = validationResult(req)
     if (!error.isEmpty()) {
-      res.render('add_article', {
+      return res.render('add_article', {
         title: 'Add Article',
         errors: error.array()
       })
-    } else {
-      try {
-        await Blog.create(req.body)
-        req.flash('success', 'Article Added')
-        res.redirect('/')
-      } catch (err) {
-        next(createError(err))
-      }
+    }
+    try {
+      await Blog.create(req.body)
+      req.flash('success', 'Article Added')
+      res.redirect('/')
+    } catch (err) {
+      next(createError(err))
     }
   }
 }
@@ -48,21 +47,20 @@ module.exports.edit = {
     if (!err.isEmpty()) {
       try {
         const article = await Blog.findAll({ where: { active: true, uuid: req.params.id } })
-        res.render('edit_article', {
+        return res.render('edit_article', {
           article: article[0],
           errors: err.array()
         })
       } catch (err) {
         next(createError(err))
       }
-    } else {
-      try {
-        await Blog.update(req.body, { where: { uuid: req.params.id } })
-        req.flash('success', 'Article Update')
-        res.redirect('/' + req.params.id)
-      } catch (err) {
-        next(createError(err))
-      }
+    }
+    try {
+      await Blog.update(req.body, { where: { uuid: req.params.id } })
+      req.flash('success', 'Article Update')
+      res.redirect('/' + req.params.id)
+    } catch (err) {
+      next(createError(err))
     }
   }
 }

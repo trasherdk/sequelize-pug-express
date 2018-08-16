@@ -1,6 +1,5 @@
 const createError = require('http-errors')
 const {Blog} = require('../models')
-// const { validationResult } = require('express-validator/check')
 
 module.exports = {
   async index (req, res, next) {
@@ -15,9 +14,12 @@ module.exports = {
   },
   async article (req, res, next) {
     try {
-      const article = await Blog.findAll({ where: { active: true, uuid: req.params.id } })
+      const article = await Blog.findOne({ where: { active: true, uuid: req.params.id } })
+      if (!article) {
+        return next(createError(404))
+      }
       res.render('article', {
-        article: article[0]
+        article: article
       })
     } catch (err) {
       next(createError(err))

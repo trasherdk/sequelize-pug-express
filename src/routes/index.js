@@ -10,13 +10,20 @@ const BlogController = require('../controllers/BlogController')
 router.get('/', IndexController.index)
 
 // User Registration
-router.get('/register', UserController.get)
+router.get('/register', UserController.register.Get)
 router.post('/register', [
   check('username').isLength({min: 1, max: 250}).withMessage('UserName is required.'),
   check('email').isLength({min: 3, max: 250}).withMessage('Email is required.').isEmail().withMessage('Please provide a valid email address').normalizeEmail(),
   check('password').isLength({ min: 6 }).withMessage('Invalid password. Password must be at least minimum 6'),
   check('password2').exists().custom((value, { req }) => value === req.body.password).withMessage('"Confirm your Password" field must have the same value as the Password field')
-], UserController.post)
+], UserController.register.Post)
+
+// User Login
+router.get('/login', UserController.login.Get)
+router.post('/login', [
+  check('email').isLength({min: 3, max: 250}).withMessage('Email is required.').isEmail().withMessage('Please provide a valid email address').normalizeEmail(),
+  check('password').isLength({ min: 6 }).withMessage('Invalid password')
+], UserController.login.Post)
 
 // Add Article
 router.get('/add', BlogController.add.Get)

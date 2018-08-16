@@ -4,10 +4,7 @@ const env = process.env.NODE_ENV || 'development'
 
 const config = require('../config/config.js')[env]
 
-// Models
-const BlogModel = require('./Blog')
-const UserModel = require('./User')
-
+// If process.env.NODE_ENV == 'development' => use SQlite, else use MYSQL
 let sequelize
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config)
@@ -15,22 +12,15 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config)
 }
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.')
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err)
-  })
+// Import Models
+const BlogModel = require('./Blog')
+const UserModel = require('./User')
 
+// Declare Models
 const Blog = BlogModel(sequelize, Sequelize)
 const User = UserModel(sequelize, Sequelize)
-/*
-Blog.create({
-  text: 'Hello'
-})
-*/
+
+// Sync with DB
 // force: true will drop the table if it already exists
 sequelize.sync({ force: false })
   .then(() => {
@@ -47,7 +37,17 @@ module.exports = {
 
 // module.exports.sequelize = sequelize
 
+// Try to connect to DB
 /*
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.')
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err)
+  })
+
 const User = sequelize.define('user', {
   firstName: {
     type: Sequelize.STRING

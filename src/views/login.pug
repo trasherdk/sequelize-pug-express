@@ -5,12 +5,12 @@ block title
 block content
   form#form(action='/login/', onsubmit="return validation()", method="POST")
     .form-group
-      label(for='email') Email 
-        span(style="color:red") (*)
-      input#email.form-control(type='email',name='email')
+      label(for='username') Email or UserName
+        span(style="color:red")
+      input#username.form-control(type='text',name='username')
     .form-group
       label(for='password') Password 
-        span(style="color:red") (*) 
+        span(style="color:red") 
         small Password must be at least 6 characters in length
       input#password.form-control(type='password',name='password')
     button.btn.btn-outline-primary(type='submit') Login
@@ -18,7 +18,7 @@ block content
 block script
     script.
       function validation (){
-        var email = $('#email').val();
+        var username = $('#username').val();
         var password = $('#password').val();
         
         $(".error").remove();
@@ -27,16 +27,9 @@ block script
           $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
         }
      
-        if (email.length < 1) {
-          message('Email is required');
+        if (username.length < 1) {
+          message('UserName is required');
           return false
-        } else {
-          var regEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-          var validEmail = regEx.test(email);
-          if (!validEmail) {
-            message('Please provide a valid email address');
-            return false
-          }
         }
         if (password.length < 6) {
           message('Password is required');

@@ -24,40 +24,40 @@ block content
     button.btn.btn-outline-primary(type='submit') Register
     
 block script
-    script.
-      function validation (){
-        var username = $('#username').val();
-        var email = $('#email').val();
-        var password = $('#password').val();
-        var password2 = $('#password2').val();
-        
-        $(".error").remove();
-        
-        function message (message) {
-          $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
-        }
-     
-        if (username.length < 1) {
-          message('UserName is required');
-          return false
-        }
-        if (email.length < 1) {
-          message('Email is required');
-          return false
-        } else {
-          var regEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-          var validEmail = regEx.test(email);
-          if (!validEmail) {
-            message('Please provide a valid email address');
-            return false
-          }
-        }
-        if (password.length < 6) {
-          message('Invalid password. Password must be at least minimum 6');
-          return false
-        }
-        if (password != password2){
-          message('Password does not match the confirm password');
+  script.
+    function validation (){
+      var username = $('#username').val();
+      var email = $('#email').val();
+      var password = $('#password').val();
+      var password2 = $('#password2').val();
+      
+      $(".error").remove();
+      
+      function message (message) {
+        $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
+      }
+   
+      if (username.length < 1) {
+        message('UserName is required');
+        return false
+      }
+      if (email.length < 1) {
+        message('Email is required');
+        return false
+      } else {
+        var regEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        var validEmail = regEx.test(email);
+        if (!validEmail) {
+          message('Please provide a valid email address');
           return false
         }
       }
+      if (password.length < 6) {
+        message('Invalid password. Password must be at least minimum 6');
+        return false
+      }
+      if (password != password2){
+        message('Password does not match the confirm password');
+        return false
+      }
+    }

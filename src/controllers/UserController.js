@@ -1,5 +1,11 @@
 const createError = require('http-errors')
-// const bcrypt = require('bcryptjs')
+const LocalStrategy = require('passport-local').Strategy
+const passport = require('passport')
+
+// where: { [Op.or]: [{x: x}, {y: y}]} OR, AND
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+
 const { User } = require('../models')
 
 module.exports.register = {
@@ -24,27 +30,61 @@ module.exports.login = {
   Get (req, res) {
     res.render('login')
   },
-  async Post (req, res, next) {
-    try {
-      const { email, password } = req.body
-      const user = await User.findOne({ where: { email: email } })
-      if (!user) {
-        return res.render('login', {
-          error: 'The login information was incorrect1'
-        })
-      }
-      const isPasswordValid = await user.comparePassword(password)
-      if (!isPasswordValid) {
-        return res.render('login', {
-          error: 'The login information was incorrect2'
-        })
-      }
-      req.flash('success', 'Login Success')
-      res.redirect('/')
-    } catch (err) {
-      next(createError(err))
-    }
+  Post (req, res, next) {
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    })(req, res, next)
   }
+}
+
+module.exports.logout = (req, res) => {
+  req.logout()
+  req.flash('success', 'You are logged out')
+  res.redirect('/')
+}
+
+// Passport Authentication
+module.exports.passport = (passport) => {
+  passport.use(new LocalStrategy(
+    async function (username, password, done) {
+      try {
+        // Find User
+        const user = await User.findOne({
+          where: {
+            [Op.or]: [{username: username}, {email: username}]
+          }
+        })
+        // Check User
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' })
+        }
+        // Compare password and hash
+        const isPasswordValid = await user.comparePassword(password)
+        // Check password
+        if (!isPasswordValid) {
+          return done(null, false, { message: 'Incorrect password.' })
+        }
+        return done(null, user)
+      } catch (err) {
+        return done(new Error(), false)
+      }
+    }
+  ))
+
+  passport.serializeUser(function (user, done) {
+    done(null, user.id)
+  })
+
+  passport.deserializeUser(async function (id, done) {
+    try {
+      const user = await User.findOne({
+        where: { id: id }
+      })
+      done(null, user)
+    } catch (err) {}
+  })
 }
 /*
 bcrypt.genSalt(10, function(err, salt) {

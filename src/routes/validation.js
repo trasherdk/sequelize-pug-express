@@ -1,5 +1,6 @@
 const Joi = require('joi')
 
+// Validation add Article form
 module.exports.add = (req, res, next) => {
   const schema = {
     author: Joi.string().min(1).max(64),
@@ -38,6 +39,7 @@ module.exports.add = (req, res, next) => {
   }
 }
 
+// Validation edit article form
 module.exports.edit = (req, res, next) => {
   const schema = {
     author: Joi.string().min(1).max(64),
@@ -76,6 +78,7 @@ module.exports.edit = (req, res, next) => {
   }
 }
 
+// Validation register form
 module.exports.register = (req, res, next) => {
   const schema = {
     username: Joi.string().alphanum().min(1).max(32),
@@ -114,6 +117,7 @@ module.exports.register = (req, res, next) => {
   }
 }
 
+// Validate Login form
 module.exports.login = (req, res, next) => {
   const schema = {
     email: Joi.string().email(),

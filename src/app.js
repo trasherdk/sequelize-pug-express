@@ -8,6 +8,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 
+const passport = require('passport')
+
 const indexRouter = require('./routes/index')
 
 const app = express()
@@ -40,6 +42,19 @@ app.use(function (req, res, next) {
   next()
 })
 
+// Passport config
+require('./controllers/UserController.js').passport(passport)
+
+// Passport
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.get('*', function (req, res, next) {
+  res.locals.user = req.user || null
+  next()
+})
+
+// Router
 app.use('/', indexRouter)
 
 // catch 404 and forward to error handler

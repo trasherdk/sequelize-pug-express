@@ -4,15 +4,15 @@ block title
   h1.my-4 #{title}
 
 block content
-  form(action='/add',method="POST")
+  form(action='/add', onsubmit="return validation()", method="POST")
     .form-group
       label(for='author') Author
         span(style="color:red") (*)
       input#author.form-control(type='text',name='author')
     .form-group
-      label(for='author') Title
+      label(for='title') Title
         span(style="color:red") (*)
-      input#author.form-control(type='text',name='title')
+      input#title.form-control(type='text',name='title')
     .form-group
       label(for='text') Text Chort
         span(style="color:red") (*)
@@ -20,7 +20,39 @@ block content
     .form-group
       label(for='textFull') Text Full
         span(style="color:red") (*)
-      textarea#text.form-control(rows='10',name='textFull')
+      textarea#textFull.form-control(rows='10',name='textFull')
     button.btn.btn-outline-primary(type='submit') Add Articles
 
 block widget
+
+block script
+  script.
+    function validation (){
+      var author = $('#author').val();
+      var title = $('#title').val();
+      var text = $('#text').val();
+      var textFull = $('#textFull').val();
+      
+      $(".error").remove();
+      
+      function message (message) {
+        $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
+      }
+   
+      if (author.length < 1) {
+        message('Author is required');
+        return false
+      }
+       if (title.length < 1) {
+        message('Title is required');
+        return false
+      }
+       if (text.length < 1) {
+        message('Text Chort is required');
+        return false
+      }
+       if (textFull.length < 1) {
+        message('Text Full is required');
+        return false
+      }
+    }

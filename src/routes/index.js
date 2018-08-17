@@ -1,5 +1,5 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 
 const IndexController = require('../controllers/IndexController')
 const UserController = require('../controllers/UserController')
@@ -15,18 +15,19 @@ router.post('/register', validation.register, UserController.register.Post)
 
 // User Login
 router.get('/login', UserController.login.Get)
-router.post('/login', validation.login, UserController.login.Post)
+router.post('/login', UserController.login.Post)
+router.get('/logout', UserController.logout)
 
 // Add Article
 router.get('/add', BlogController.add.Get)
 router.post('/add', validation.add, BlogController.add.Post)
 
 // Edit Article
-router.get('/edit/:id/', BlogController.edit.Get)
-router.post('/edit/:id/', validation.edit, BlogController.edit.Post)
+router.get('/edit/:id', BlogController.edit.Get)
+router.post('/edit/:id', validation.edit, BlogController.edit.Post)
 
 // Article Page
-router.get('/:id/', IndexController.article)
+router.get('/:id', IndexController.article)
 
 // Delete Article
 router.delete('/:id', BlogController.delete)

@@ -4,7 +4,7 @@ block title
   h1.my-4 #{title}
 
 block content
-  form(action="/edit/"+article.uuid,method="POST")
+  form(action="/edit/"+article.uuid, onsubmit="return validation()", method="POST")
     .form-group
       label(for='author') Author
         span(style="color:red") (*)
@@ -25,3 +25,35 @@ block content
     button.btn.btn-outline-primary(type='submit') Save
 
 block widget
+
+block script
+  script.
+    function validation (){
+      var author = $('#author').val();
+      var title = $('#title').val();
+      var text = $('#text').val();
+      var textFull = $('#textFull').val();
+      
+      $(".error").remove();
+      
+      function message (message) {
+        $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
+      }
+   
+      if (author.length < 1) {
+        message('Author is required');
+        return false
+      }
+       if (title.length < 1) {
+        message('Title is required');
+        return false
+      }
+       if (text.length < 1) {
+        message('Text Chort is required');
+        return false
+      }
+       if (textFull.length < 1) {
+        message('Text Full is required');
+        return false
+      }
+    }

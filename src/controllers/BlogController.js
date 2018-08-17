@@ -1,17 +1,54 @@
 const createError = require('http-errors')
 
-const { Blog } = require('../models')
+const { Blog, User } = require('../models')
+
+module.exports.index = {
+  // Index Page
+  async blog (req, res, next) {
+    try {
+      const articles = await Blog.findAll({ where: { active: true } })
+      res.render('index', {
+        articles: articles
+      })
+    } catch (err) {
+      next(createError(err))
+    }
+  },
+  // Article Page
+  async article (req, res, next) {
+    try {
+      const article = await Blog.findOne({ where: { active: true, uuid: req.params.id } })
+      if (!article) {
+        return next(createError(404))
+      }
+      const user = await User.findOne({ where: {id: article.author} })
+      res.render('article', {
+        article: article,
+        author: user.username
+      })
+    } catch (err) {
+      next(createError(err))
+    }
+  }
+}
 
 // Add Article
 module.exports.add = {
+  // Add Article Form
   Get (req, res) {
     res.render('add_article', {
       title: 'Add Article'
     })
   },
+  // Add Article Post
   async Post (req, res, next) {
     try {
-      await Blog.create(req.body)
+      await Blog.create({
+        author: req.user.id,
+        title: req.body.title,
+        text: req.body.text,
+        textFull: req.body.textFull
+      })
       req.flash('success', 'Article Added')
       res.redirect('/')
     } catch (err) {
@@ -22,16 +59,23 @@ module.exports.add = {
 
 // Edit Article
 module.exports.edit = {
+  // Edit Article Form
   async Get (req, res, next) {
     try {
       const article = await Blog.findAll({ where: { active: true, uuid: req.params.id } })
-      res.render('edit_article', {
-        article: article[0]
-      })
+      if (article.author !== req.user.username) {
+        req.flash('danger', 'Please, Log in')
+        res.redirect('/login/')
+      } else {
+        res.render('edit_article', {
+          article: article[0]
+        })
+      }
     } catch (err) {
       next(createError(err))
     }
   },
+  // Edit Article Post
   async Post (req, res, next) {
     try {
       await Blog.update(req.body, { where: { uuid: req.params.id } })
@@ -45,7 +89,14 @@ module.exports.edit = {
 
 // Delete Article
 module.exports.delete = async (req, res, next) => {
+  if (!req.user.id) {
+    return res.status(500).send()
+  }
   try {
+    const article = await Blog.findOne({ where: { active: true, uuid: req.params.id } })
+    if (String(article.author) !== String(req.user.id)) {
+      return res.status(500).send()
+    }
     await Blog.update({ active: false }, {where: {uuid: req.params.id}})
     res.send('success')
   } catch (err) {
@@ -183,5 +234,106 @@ module.exports.add = {
       title: 'Add Article'
     })
   }
+}
+*/
+// const createError = require('http-errors')
+// const {Blog} = require('../models')
+/*
+module.exports = {
+  async index (req, res, next) {
+    try {
+      const articles = await Blog.findAll({ where: { active: true } })
+      res.render('index', {
+        articles: articles
+      })
+    } catch (err) {
+      next(createError(err))
+    }
+  },
+  async article (req, res, next) {
+    try {
+      const article = await Blog.findOne({ where: { active: true, uuid: req.params.id } })
+      if (!article) {
+        return next(createError(404))
+      }
+      res.render('article', {
+        article: article
+      })
+    } catch (err) {
+      next(createError(err))
+    }
+  }
+}
+*/
+/*
+async show (req, res) {
+    try {
+      const song = await Song.findById(req.params.songId)
+      res.send(song)
+    } catch (err) {
+      res.status(500).send({
+        error: 'an error has occured trying to show the songs'
+      })
+    }
+  },
+
+module.exports.article = (req, res, next) => {
+  Blog.findAll({
+    where: {
+      id: req.params.id
+    }
+  }).then(article => {
+    console.log(article)
+    if (article[0]) {
+      res.render('article', {
+        article: article[0]
+      })
+    } else {
+      next(createError(404))
+    }
+  }).catch(error => {
+    console.log(error)
+    next(createError(error))
+  })
+}
+
+module.exports.post = {
+  async index (req, res, next) {
+    try {
+      const song = await Blog.findAll({
+        where: {
+          active: true
+        }
+      })
+      res.send(song)
+    } catch (err) {
+      res.status(500).send({
+        error: 'an error has occured trying to create the song'
+      })
+    }
+  }
+}
+*/
+
+/*
+module.exports.index = (req, res, next) => {
+  Blog.findAll({
+    where: {
+      active: true
+    }
+  }).then(articles => {
+    res.render('index', {
+      url: req.url,
+      title: 'Blog',
+      articles: articles
+    })
+    // console.log(articles)
+  }).catch(error => {
+    console.log(error)
+    next(createError(error))
+  })
+  User.findAll({}).then(users => {
+    console.log(users)
+  })
 }
 */

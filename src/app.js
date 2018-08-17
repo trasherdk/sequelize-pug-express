@@ -43,7 +43,7 @@ app.use(function (req, res, next) {
 })
 
 // Passport config
-require('./controllers/UserController.js').passport(passport)
+require('./controllers/Passport.js')(passport)
 
 // Passport
 app.use(passport.initialize())

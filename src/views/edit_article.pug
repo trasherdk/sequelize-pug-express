@@ -6,20 +6,16 @@ block title
 block content
   form(action="/edit/"+article.uuid, onsubmit="return validation()", method="POST")
     .form-group
-      label(for='author') Author
-        span(style="color:red") (*)
-      input#author.form-control(type='text',name='author',value=article.author)
-    .form-group
       label(for='author') Title
-        span(style="color:red") (*)
+        span(style="color:red")
       input#author.form-control(type='text',name='title',value=article.title)
     .form-group
       label(for='text') Text
-        span(style="color:red") (*)
+        span(style="color:red")
       textarea#text.form-control(rows='5',name='text') #{article.text}
     .form-group
       label(for='textFull') Text Full
-        span(style="color:red") (*)
+        span(style="color:red")
       textarea#text.form-control(rows='10',name='textFull') #{article.textFull}
     hr
     button.btn.btn-outline-primary(type='submit') Save
@@ -38,11 +34,6 @@ block script
       
       function message (message) {
         $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
-      }
-   
-      if (author.length < 1) {
-        message('Author is required');
-        return false
       }
        if (title.length < 1) {
         message('Title is required');

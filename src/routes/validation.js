@@ -3,7 +3,6 @@ const Joi = require('joi')
 // Validation add Article form
 module.exports.add = (req, res, next) => {
   const schema = {
-    author: Joi.string().min(1).max(64),
     title: Joi.string().min(1).max(200),
     text: Joi.string().min(1),
     textFull: Joi.string().min(1)
@@ -13,11 +12,6 @@ module.exports.add = (req, res, next) => {
 
   if (error) {
     switch (error.details[0].context.key) {
-      case 'author':
-        res.render('add_article', {
-          error: 'Author is require'
-        })
-        break
       case 'title':
         res.render('add_article', {
           error: 'Title is require'
@@ -42,7 +36,6 @@ module.exports.add = (req, res, next) => {
 // Validation edit article form
 module.exports.edit = (req, res, next) => {
   const schema = {
-    author: Joi.string().min(1).max(64),
     title: Joi.string().min(1).max(200),
     text: Joi.string().min(1),
     textFull: Joi.string().min(1)
@@ -52,11 +45,6 @@ module.exports.edit = (req, res, next) => {
 
   if (error) {
     switch (error.details[0].context.key) {
-      case 'author':
-        res.render('edit_article', {
-          error: 'Author is require'
-        })
-        break
       case 'title':
         res.render('edit_article', {
           error: 'Title is require'
@@ -81,7 +69,7 @@ module.exports.edit = (req, res, next) => {
 // Validation register form
 module.exports.register = (req, res, next) => {
   const schema = {
-    username: Joi.string().alphanum().min(1).max(32),
+    username: Joi.string().alphanum().min(1).max(64),
     email: Joi.string().email(),
     password: Joi.string().min(6).max(64).required(),
     password2: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } })
@@ -120,7 +108,7 @@ module.exports.register = (req, res, next) => {
 // Validate Login form
 module.exports.login = (req, res, next) => {
   const schema = {
-    email: Joi.string().email(),
+    username: Joi.string().min(1).max(64),
     password: Joi.string().min(6).max(64).required()
   }
 
@@ -128,9 +116,9 @@ module.exports.login = (req, res, next) => {
 
   if (error) {
     switch (error.details[0].context.key) {
-      case 'email':
+      case 'username':
         res.render('register', {
-          error: 'You must provide a valid email address'
+          error: 'Username or email is required'
         })
         break
       case 'password':

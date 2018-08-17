@@ -7,7 +7,7 @@ block title
 block content
   // Author
   p.lead by 
-    a(href='/') #{article.author}
+    a(href='/') #{author}
   hr
   // Date/Time
   p Posted on #{article.createdAt}
@@ -50,8 +50,9 @@ block content
           |                   Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
 
 block widget
-  a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.uuid) Edit
-  button.btn.btn-outline-danger.delete-article(data-id=article.uuid, type="button") Delete
+  if user.id == article.author
+    a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.uuid) Edit
+    button.btn.btn-outline-danger.delete-article(data-id=article.uuid, type="button") Delete
 block script
   script.
       $(document).ready(function(){

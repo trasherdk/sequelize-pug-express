@@ -1,18 +1,29 @@
 const LocalStrategy = require('passport-local').Strategy
 
+// where: { [Op.or]: [{x: x}, {y: y}]} OR, AND
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+
 const {User} = require('../models/')
 
-module.exports.passport = (passport) => {
+// Passport Authentication
+module.exports = (passport) => {
   passport.use(new LocalStrategy(
     async function (username, password, done) {
       try {
+        // Find User
         const user = await User.findOne({
-          where: { username: username }
+          where: {
+            [Op.or]: [{username: username}, {email: username}]
+          }
         })
+        // Check User
         if (!user) {
           return done(null, false, { message: 'Incorrect username.' })
         }
+        // Compare password and hash
         const isPasswordValid = await user.comparePassword(password)
+        // Check password
         if (!isPasswordValid) {
           return done(null, false, { message: 'Incorrect password.' })
         }
@@ -28,7 +39,6 @@ module.exports.passport = (passport) => {
   })
 
   passport.deserializeUser(async function (id, done) {
-    console.log(id)
     try {
       const user = await User.findOne({
         where: { id: id }

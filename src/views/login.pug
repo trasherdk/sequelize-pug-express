@@ -5,15 +5,12 @@ block title
 block content
   form#form(action='/login/', onsubmit="return validation()", method="POST")
     .form-group
-      label(for='username') Email or UserName
-        span(style="color:red")
+      label(for='username') Введите Email или Имя пользователя
       input#username.form-control(type='text',name='username')
     .form-group
-      label(for='password') Password 
-        span(style="color:red") 
-        small Password must be at least 6 characters in length
+      label(for='password') Пароль
       input#password.form-control(type='password',name='password')
-    button.btn.btn-outline-primary(type='submit') Login
+    button.btn.btn-outline-primary(type='submit') Войти
 
 block script
     script.
@@ -28,11 +25,11 @@ block script
         }
      
         if (username.length < 1) {
-          message('UserName is required');
+          message('Введите Email или Имя пользователя');
           return false
         }
         if (password.length < 6) {
-          message('Password is required');
+          message('Ведите пароль');
           return false
         }
       }

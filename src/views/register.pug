@@ -1,27 +1,23 @@
 extends layout
 block title
-  h1.my-4 Register
+  h1.my-4 Регистрация
 
 block content
   form#form(action='/register/', onsubmit="return validation()", method="POST")
     .form-group
-      label(for='username') UserName 
-        span(style="color:red") (*)
+      label(for='username') Имя пользователя
       input#username.form-control(type='text',name='username')
     .form-group
       label(for='email') Email 
-        span(style="color:red") (*)
       input#email.form-control(type='email',name='email')
     .form-group
-      label(for='password') Password 
-        span(style="color:red") (*) 
-        small Password must be at least 6 characters in length
+      label(for='password') Пароль 
+        small (не менее 6 символов)
       input#password.form-control(type='password',name='password')
     .form-group
-      label(for='password2') Confirm your Password 
-        span(style="color:red") (*)
+      label(for='password2') Подтвердите пароль
       input#password2.form-control(type='password',name='password2')
-    button.btn.btn-outline-primary(type='submit') Register
+    button.btn.btn-outline-primary(type='submit') Зарегистрироваться
     
 block script
   script.
@@ -38,26 +34,26 @@ block script
       }
    
       if (username.length < 1) {
-        message('UserName is required');
+        message('Введите Имя пользователя');
         return false
       }
       if (email.length < 1) {
-        message('Email is required');
+        message('Введите Email');
         return false
       } else {
         var regEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         var validEmail = regEx.test(email);
         if (!validEmail) {
-          message('Please provide a valid email address');
+          message('Введите валидный Email');
           return false
         }
       }
       if (password.length < 6) {
-        message('Invalid password. Password must be at least minimum 6');
+        message('Пароль должен быть не короче 6 символов');
         return false
       }
       if (password != password2){
-        message('Password does not match the confirm password');
+        message('Пароль и подтверждение пароля не совпадают');
         return false
       }
     }

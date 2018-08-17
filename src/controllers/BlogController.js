@@ -37,7 +37,6 @@ module.exports.add = {
   // Add Article Form
   Get (req, res) {
     res.render('add_article', {
-      title: 'Add Article'
     })
   },
   // Add Article Post
@@ -49,7 +48,7 @@ module.exports.add = {
         text: req.body.text,
         textFull: req.body.textFull
       })
-      req.flash('success', 'Article Added')
+      req.flash('success', 'Изменения сохранены.')
       res.redirect('/')
     } catch (err) {
       next(createError(err))
@@ -62,13 +61,13 @@ module.exports.edit = {
   // Edit Article Form
   async Get (req, res, next) {
     try {
-      const article = await Blog.findAll({ where: { active: true, uuid: req.params.id } })
-      if (article.author !== req.user.username) {
-        req.flash('danger', 'Please, Log in')
+      const article = await Blog.findOne({ where: { active: true, uuid: req.params.id } })
+      if (String(article.author) !== String(req.user.id)) {
+        req.flash('danger', 'Пожалуйста, авторизируйтесь или создайте учетную запись.')
         res.redirect('/login/')
       } else {
         res.render('edit_article', {
-          article: article[0]
+          article: article
         })
       }
     } catch (err) {
@@ -79,7 +78,7 @@ module.exports.edit = {
   async Post (req, res, next) {
     try {
       await Blog.update(req.body, { where: { uuid: req.params.id } })
-      req.flash('success', 'Article Update')
+      req.flash('success', 'Изменения сохранены.')
       res.redirect('/' + req.params.id)
     } catch (err) {
       next(createError(err))

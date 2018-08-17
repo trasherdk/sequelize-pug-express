@@ -1,23 +1,23 @@
 extends layout
 
 block title
-  h1.my-4 #{title}
+  h1.my-4 Новая запись
 
 block content
   form(action='/add', onsubmit="return validation()", method="POST")
     .form-group
-      label(for='title') Title
+      label(for='title') Заголовок
         span(style="color:red")
       input#title.form-control(type='text',name='title')
     .form-group
-      label(for='text') Text Chort
+      label(for='text') Заголовочный текст
         span(style="color:red")
       textarea#text.form-control(rows='5',name='text')
     .form-group
-      label(for='textFull') Text Full
+      label(for='textFull') Текст
         span(style="color:red")
       textarea#textFull.form-control(rows='10',name='textFull')
-    button.btn.btn-outline-primary(type='submit') Add Articles
+    button.btn.btn-outline-primary(type='submit') Добавить запись
 
 block widget
 
@@ -36,15 +36,15 @@ block script
       }
       
        if (title.length < 1) {
-        message('Title is required');
+        message('Введите заголовок');
         return false
       }
        if (text.length < 1) {
-        message('Text Chort is required');
+        message('Введите заголовочный текст');
         return false
       }
        if (textFull.length < 1) {
-        message('Text Full is required');
+        message('Введите текст');
         return false
       }
     }

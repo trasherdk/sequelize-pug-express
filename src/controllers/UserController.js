@@ -10,8 +10,8 @@ module.exports.register = {
   async Post (req, res, next) {
     try {
       await User.create(req.body)
-      req.flash('success', 'New User Created')
-      res.redirect('/')
+      req.flash('success', 'Пользователь создан.')
+      res.redirect('/login/')
       User.findAll({}).then(users => {
         console.log(users)
       })
@@ -36,7 +36,7 @@ module.exports.login = {
 
 module.exports.logout = (req, res) => {
   req.logout()
-  req.flash('success', 'You are logged out')
+  req.flash('success', 'Аутентификация успешна.')
   res.redirect('/')
 }
 

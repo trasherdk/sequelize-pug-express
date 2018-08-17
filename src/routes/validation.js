@@ -14,17 +14,17 @@ module.exports.add = (req, res, next) => {
     switch (error.details[0].context.key) {
       case 'title':
         res.render('add_article', {
-          error: 'Title is require'
+          error: 'Введите заголовок'
         })
         break
       case 'text':
         res.render('add_article', {
-          error: 'Text Chort is require'
+          error: 'Введите заголовочный текст'
         })
         break
       case 'textFull':
         res.render('add_article', {
-          error: 'Text Full is require'
+          error: 'Введите текст'
         })
         break
     }
@@ -47,17 +47,17 @@ module.exports.edit = (req, res, next) => {
     switch (error.details[0].context.key) {
       case 'title':
         res.render('edit_article', {
-          error: 'Title is require'
+          error: 'Введите заголовок'
         })
         break
       case 'text':
         res.render('edit_article', {
-          error: 'Text Chort is require'
+          error: 'Введите заголовочный текст'
         })
         break
       case 'textFull':
         res.render('edit_article', {
-          error: 'Text Full is require'
+          error: 'Введите текст'
         })
         break
     }
@@ -81,22 +81,22 @@ module.exports.register = (req, res, next) => {
     switch (error.details[0].context.key) {
       case 'username':
         res.render('register', {
-          error: 'Username is Invalid'
+          error: 'Некорректное имя пользователя'
         })
         break
       case 'email':
         res.render('register', {
-          error: 'You must provide a valid email address'
+          error: 'Некорректный электронный адрес'
         })
         break
       case 'password':
         res.render('register', {
-          error: 'Password must be at least 6 characters in length'
+          error: 'Пароль должен быть не короче 6 символов'
         })
         break
       case 'password2':
         res.render('register', {
-          error: 'Password does not match the confirm password'
+          error: 'Пароль и подтверждение пароля не совпадают'
         })
         break
     }
@@ -118,12 +118,12 @@ module.exports.login = (req, res, next) => {
     switch (error.details[0].context.key) {
       case 'username':
         res.render('register', {
-          error: 'Username or email is required'
+          error: 'Введите Email или Имя пользователя'
         })
         break
       case 'password':
         res.render('register', {
-          error: 'Password is Invalid'
+          error: 'Некорректный пароль'
         })
         break
     }

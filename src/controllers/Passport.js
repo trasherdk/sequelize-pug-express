@@ -19,13 +19,13 @@ module.exports = (passport) => {
         })
         // Check User
         if (!user) {
-          return done(null, false, { message: 'Incorrect username.' })
+          return done(null, false, { message: 'Неверные аутентификационные данные.' })
         }
         // Compare password and hash
         const isPasswordValid = await user.comparePassword(password)
         // Check password
         if (!isPasswordValid) {
-          return done(null, false, { message: 'Incorrect password.' })
+          return done(null, false, { message: 'Неверные аутентификационные данные.' })
         }
         return done(null, user)
       } catch (err) {

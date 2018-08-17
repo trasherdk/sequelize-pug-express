@@ -10,7 +10,7 @@ block content
     a(href='/') #{author}
   hr
   // Date/Time
-  p Posted on #{article.createdAt}
+  p Добавлен: #{article.createdAt}
   hr
   // Preview Image
   img.img-fluid.rounded(src='https://placehold.it/900x300', alt='')
@@ -20,12 +20,12 @@ block content
   hr
   // Comments Form
   .card.my-4
-    h5.card-header Leave a Comment:
+    h5.card-header Оставьте комментарий:
     .card-body
       form
         .form-group
           textarea.form-control(rows='3')
-        button.btn.btn-outline-primary(type='submit') Submit
+        button.btn.btn-outline-primary(type='submit') Отправить
   // Single Comment
   //.media.mb-4
     img.d-flex.mr-3.rounded-circle(src='http://placehold.it/50x50', alt='')
@@ -51,8 +51,8 @@ block content
 
 block widget
   if user.id == article.author
-    a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.uuid) Edit
-    button.btn.btn-outline-danger.delete-article(data-id=article.uuid, type="button") Delete
+    a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.uuid) Редактировать
+    button.btn.btn-outline-danger.delete-article(data-id=article.uuid, type="button") Удалить
 block script
   script.
       $(document).ready(function(){

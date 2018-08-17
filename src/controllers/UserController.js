@@ -12,9 +12,6 @@ module.exports.register = {
       await User.create(req.body)
       req.flash('success', 'Пользователь создан.')
       res.redirect('/login/')
-      User.findAll({}).then(users => {
-        console.log(users)
-      })
     } catch (err) {
       next(createError(err))
     }
@@ -28,6 +25,7 @@ module.exports.login = {
   Post (req, res, next) {
     passport.authenticate('local', {
       successRedirect: '/',
+      successFlash: 'Аутентификация успешна.',
       failureRedirect: '/login',
       failureFlash: true
     })(req, res, next)
@@ -36,7 +34,6 @@ module.exports.login = {
 
 module.exports.logout = (req, res) => {
   req.logout()
-  req.flash('success', 'Аутентификация успешна.')
   res.redirect('/')
 }
 

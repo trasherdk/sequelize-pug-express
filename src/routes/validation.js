@@ -1,133 +1,75 @@
-const Joi = require('joi')
+const { validationResult } = require('express-validator/check')
+const createError = require('http-errors')
 
-// Validation add Article form
-module.exports.add = (req, res, next) => {
-  const schema = {
-    title: Joi.string().min(1).max(200),
-    text: Joi.string().min(1),
-    textFull: Joi.string().min(1)
-  }
+// where: { [Op.or]: [{x: x}, {y: y}]} OR, AND
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
-  const { error } = Joi.validate(req.body, schema)
+const {User} = require('../models')
 
-  if (error) {
-    switch (error.details[0].context.key) {
-      case 'title':
-        res.render('add_article', {
-          error: 'Введите заголовок'
-        })
-        break
-      case 'text':
-        res.render('add_article', {
-          error: 'Введите заголовочный текст'
-        })
-        break
-      case 'textFull':
-        res.render('add_article', {
-          error: 'Введите текст'
-        })
-        break
+module.exports.user = {
+  async register (req, res, next) {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.render('register', {
+        errors: errors.array()
+      })
     }
-  } else {
-    next()
+    try {
+      const user = await User.findOne({
+        where: {
+          [Op.or]: [{ username: req.body.username }, { email: req.body.email }]
+        }
+      })
+      if (user) {
+        return res.render('register', {
+          error: 'Имя пользователя или Email уже используются'
+        })
+      } else {
+        next()
+      }
+    } catch (err) {
+      next(createError(err))
+    }
+  },
+  login (req, res, next) {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      res.render('login', {
+        errors: errors.array()
+      })
+      console.log(errors)
+    } else {
+      next()
+    }
   }
 }
 
-// Validation edit article form
-module.exports.edit = (req, res, next) => {
-  const schema = {
-    title: Joi.string().min(1).max(200),
-    text: Joi.string().min(1),
-    textFull: Joi.string().min(1)
-  }
-
-  const { error } = Joi.validate(req.body, schema)
-
-  if (error) {
-    switch (error.details[0].context.key) {
-      case 'title':
-        res.render('edit_article', {
-          error: 'Введите заголовок'
-        })
-        break
-      case 'text':
-        res.render('edit_article', {
-          error: 'Введите заголовочный текст'
-        })
-        break
-      case 'textFull':
-        res.render('edit_article', {
-          error: 'Введите текст'
-        })
-        break
+module.exports.blog = {
+  add (req, res, next) {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      res.render('add_article', {
+        errors: errors.array()
+      })
+      console.log(errors)
+    } else {
+      next()
     }
-  } else {
-    next()
-  }
-}
-
-// Validation register form
-module.exports.register = (req, res, next) => {
-  const schema = {
-    username: Joi.string().alphanum().min(1).max(64),
-    email: Joi.string().email(),
-    password: Joi.string().min(6).max(64).required(),
-    password2: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } })
-  }
-
-  const { error } = Joi.validate(req.body, schema)
-
-  if (error) {
-    switch (error.details[0].context.key) {
-      case 'username':
-        res.render('register', {
-          error: 'Некорректное имя пользователя'
-        })
-        break
-      case 'email':
-        res.render('register', {
-          error: 'Некорректный электронный адрес'
-        })
-        break
-      case 'password':
-        res.render('register', {
-          error: 'Пароль должен быть не короче 6 символов'
-        })
-        break
-      case 'password2':
-        res.render('register', {
-          error: 'Пароль и подтверждение пароля не совпадают'
-        })
-        break
+  },
+  edit (req, res, next) {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      res.render('edit_article', {
+        errors: errors.array()
+      })
+      console.log(errors)
+    } else {
+      next()
     }
-  } else {
-    next()
-  }
-}
-
-// Validate Login form
-module.exports.login = (req, res, next) => {
-  const schema = {
-    username: Joi.string().min(1).max(64),
-    password: Joi.string().min(6).max(64).required()
-  }
-
-  const { error } = Joi.validate(req.body, schema)
-
-  if (error) {
-    switch (error.details[0].context.key) {
-      case 'username':
-        res.render('register', {
-          error: 'Введите Email или Имя пользователя'
-        })
-        break
-      case 'password':
-        res.render('register', {
-          error: 'Некорректный пароль'
-        })
-        break
-    }
-  } else {
-    next()
   }
 }

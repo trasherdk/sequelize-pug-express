@@ -1,5 +1,4 @@
 const createError = require('http-errors')
-const passport = require('passport')
 
 const { User } = require('../models')
 
@@ -10,8 +9,7 @@ module.exports.register = {
   async Post (req, res, next) {
     try {
       await User.create(req.body)
-      req.flash('success', 'Пользователь создан.')
-      res.redirect('/login/')
+      next()
     } catch (err) {
       next(createError(err))
     }
@@ -23,12 +21,8 @@ module.exports.login = {
     res.render('login')
   },
   Post (req, res, next) {
-    passport.authenticate('local', {
-      successRedirect: '/',
-      successFlash: 'Аутентификация успешна.',
-      failureRedirect: '/login',
-      failureFlash: true
-    })(req, res, next)
+    req.flash('success', 'Аутентификация успешна.')
+    res.redirect('/')
   }
 }
 

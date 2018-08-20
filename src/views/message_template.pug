@@ -2,4 +2,5 @@
   each type in Object.keys(messages)
     each message in messages[type]
       div(class = "alert alert-"+type) #{message}
-        b(style="float:right; cursor:pointer; font-weight: normal", onClick="hello(this)") [x]
+        button.close(type='button', aria-label='Close', onClick="hello(this)")
+          span(aria-hidden='true') &times;

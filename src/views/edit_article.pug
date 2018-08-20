@@ -33,18 +33,18 @@ block script
       $(".error").remove();
       
       function message (message) {
-        $('#error').html('<div class="alert alert-danger error">' + message + '<b style="float:right; cursor:pointer; font-weight: normal" onclick="hello(this)">[x]</b></div>');
+        $('#error').html('<div class="alert alert-danger error">' + message + '<button class="close" type="button" aria-label="Close" onClick="hello(this)"><span aria-hidden="true">&times;</span></button></div>');
       }
        if (title.length < 1) {
-        message('Введите заголовок');
+        message('Требуется заголовок');
         return false
       }
        if (text.length < 1) {
-        message('Введите заголовочный текст');
+        message('Требуется заголовочный текст');
         return false
       }
        if (textFull.length < 1) {
-        message('Введите текст');
+        message('Требуется текст');
         return false
       }
     }

@@ -4,7 +4,7 @@ const LocalStrategy = require('passport-local').Strategy
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
-const {User} = require('../models/')
+const {User} = require('./models/')
 
 // Passport Authentication
 module.exports = (passport) => {

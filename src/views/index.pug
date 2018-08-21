@@ -3,13 +3,36 @@ block title
   //h1.my-4 #{title}
 
 block content
+  //form
+    .row
+      .col.text-center
+        a(href=paginate.href({ sort: 'createdAt' })) Дата
+      .col.text-center
+        a(href=paginate.href({ sort: 'author' })) Автор
+      .col.text-center
+        a(href=paginate.href({ age: 'DESC' })) По Убыванию
+      .col.text-center
+        a(href=paginate.href({ age: 'ASC' })) По Возрастанию
+  form(action='/', method="GET")
+    .row
+      .col
+        .input-group
+          select#inputGroupSelect04.custom-select(name="sort")
+            option(value='createdAt') Дата
+            option(value='author') Автор
+          select#inputGroupSelect04.custom-select(name="age")
+            option(value='DESC') По Убыванию
+            option(value='ASC') По Возрастанию
+          .input-group-append
+            button.btn.btn-outline-secondary(type='submit') Button
   each article in articles
     // Blog Post
     .card.my-4
       img.card-img-top(src='https://placehold.it/750x300', alt='Card image cap')
       .card-body
         h2.card-title 
-          a(href="/"+article.uuid) #{article.title}
+          a(href="/post/"+article.uuid) #{article.title}
         p.card-text #{article.text}
-        a.btn.btn-outline-primary(href="/"+article.uuid) Читать дальше →
+        a.btn.btn-outline-primary(href="/post/"+article.uuid) Читать дальше →
       .card-footer.text-muted Posted on #{article.createdAt}
+  include _paginate

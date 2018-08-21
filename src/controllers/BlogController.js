@@ -1,18 +1,28 @@
 const createError = require('http-errors')
+const paginate = require('express-paginate')
 
 const { Blog, User } = require('../models')
 
 module.exports.index = {
   // Index Page
   async blog (req, res, next) {
+    let order = req.query.sort || 'createdAt'
+    let age = req.query.age || 'DESC'
     try {
-      const articles = await Blog.findAll({ where: { active: true } })
+      let results = await Blog.findAndCountAll({ limit: req.query.limit,
+        offset: req.skip,
+        order: [
+          [order, age]
+        ] })
+      const itemCount = results.count
+      const pageCount = Math.ceil(results.count / req.query.limit)
       res.render('index', {
-        articles: articles
+        articles: results.rows,
+        pageCount,
+        itemCount,
+        pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
       })
-    } catch (err) {
-      next(createError(err))
-    }
+    } catch (err) { next(err) }
   },
   // Article Page
   async article (req, res, next) {
@@ -21,7 +31,7 @@ module.exports.index = {
       if (!article) {
         return next(createError(404))
       }
-      const user = await User.findOne({ where: {id: article.author} })
+      const user = await User.findOne({ where: { id: article.author } })
       res.render('article', {
         article: article,
         author: user.username
@@ -79,7 +89,7 @@ module.exports.edit = {
     try {
       await Blog.update(req.body, { where: { uuid: req.params.id } })
       req.flash('success', 'Изменения сохранены.')
-      res.redirect('/' + req.params.id)
+      res.redirect('/post/' + req.params.id)
     } catch (err) {
       next(createError(err))
     }

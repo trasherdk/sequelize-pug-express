@@ -4,7 +4,7 @@ block title
   h1.my-4 Новая запись
 
 block content
-  form(action='/add', onsubmit="return validation()", method="POST")
+  form(action='/post/add', onsubmit="return validation()", method="POST")
     .form-group
       label(for='title') Заголовок
         span(style="color:red")

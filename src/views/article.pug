@@ -51,7 +51,7 @@ block content
 
 block widget
   if user.id == article.author
-    a.btn.btn-outline-secondary.mr-1(href="/edit/"+article.uuid) Редактировать
+    a.btn.btn-outline-secondary.mr-1(href="/post/edit/"+article.uuid) Редактировать
     button.btn.btn-outline-danger.delete-article(data-id=article.uuid, type="button") Удалить
 block script
   script.
@@ -61,7 +61,7 @@ block script
           var id = $target.attr('data-id');
           $.ajax({
             type:'DELETE',
-            url: '/'+id,
+            url: '/post/'+id,
             success: function(response){
               alert('Deleting Article');
               window.location.href='/';

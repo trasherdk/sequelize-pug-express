@@ -4,7 +4,7 @@ block title
   h1.my-4 Редактирование записи
 
 block content
-  form(action="/edit/"+article.uuid, onsubmit="return validation()", method="POST")
+  form(action="/post/edit/"+article.uuid, onsubmit="return validation()", method="POST")
     .form-group
       label(for='author') Заголовок
         span(style="color:red")

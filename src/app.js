@@ -10,8 +10,6 @@ const logger = require('morgan')
 
 const passport = require('passport')
 
-const indexRouter = require('./routes/index')
-
 const app = express()
 
 // view engine setup
@@ -43,7 +41,7 @@ app.use(function (req, res, next) {
 })
 
 // Passport config
-require('./controllers/Passport.js')(passport)
+require('./passport.js')(passport)
 
 // Passport
 app.use(passport.initialize())
@@ -54,7 +52,8 @@ app.get('*', function (req, res, next) {
   next()
 })
 
-// Router
+// Routes
+const indexRouter = require('./routes/index')
 app.use('/', indexRouter)
 
 // catch 404 and forward to error handler

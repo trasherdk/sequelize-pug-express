@@ -82,10 +82,10 @@ html(lang='en')
           .card.my-4
             h5.card-header Поиск
             .card-body
-              .input-group
-                input.form-control(type='text', placeholder='Найти...')
+              form.input-group(action='/search/')
+                input.form-control(type='text', placeholder='Найти...', name="val")
                 span.input-group-btn
-                  button.btn.btn-outline-secondary(type='button') Go!
+                  button.btn.btn-outline-secondary(type='submit') Go!
           // Categories Widget
           .card.my-4
             h5.card-header Категории
@@ -94,19 +94,19 @@ html(lang='en')
                 .col-lg-6
                   ul.list-unstyled.mb-0
                     li
-                      a(href='#') Web Design
+                      a(href='/') Web Design
                     li
-                      a(href='#') HTML
+                      a(href='/') HTML
                     li
-                      a(href='#') Freebies
+                      a(href='/') Freebies
                 .col-lg-6
                   ul.list-unstyled.mb-0
                     li
-                      a(href='#') JavaScript
+                      a(href='/') JavaScript
                     li
-                      a(href='#') CSS
+                      a(href='/') CSS
                     li
-                      a(href='#') Tutorials
+                      a(href='/') Tutorials
       // /.row
     // /.container
     // Footer

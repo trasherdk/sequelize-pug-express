@@ -1,0 +1,19 @@
+extends layout
+block title
+  //h1.my-4 #{title}
+
+block content
+  if notFound
+    h2.text-center #{notFound}
+  else
+    each article in articles
+      // Blog Post
+      .card.my-4
+        img.card-img-top(src='https://placehold.it/750x300', alt='Card image cap')
+        .card-body
+          h2.card-title 
+            a(href="/post/"+article.uuid) #{article.title}
+          p.card-text #{article.text}
+          a.btn.btn-outline-primary(href="/post/"+article.uuid) Читать дальше →
+        .card-footer.text-muted Posted on #{article.createdAt}
+    include _paginate

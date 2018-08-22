@@ -18,13 +18,34 @@ block content
       .col
         .input-group
           select#inputGroupSelect04.custom-select(name="sort")
-            option(value='createdAt') Дата
-            option(value='author') Автор
+            if orderValues.sort == 'author'
+              option(value='createdAt') Дата
+              option(value='author',selected="selected") Автор
+            else
+              option(value='createdAt') Дата
+              option(value='author') Автор
           select#inputGroupSelect04.custom-select(name="age")
-            option(value='DESC') По Убыванию
-            option(value='ASC') По Возрастанию
+            if orderValues.age == 'asc'
+              option(value='desc') По Убыванию
+              option(value='asc',selected="selected") По Возрастанию
+            else
+              option(value='desc') По Убыванию
+            option(value='asc') По Возрастанию
+          select#inputGroupSelect04.custom-select(name="limit")
+            if orderValues.limit == 5
+              option(value='3') 3
+              option(value='5',selected="selected") 5
+              option(value='10') 10
+            else if orderValues.limit == 10
+              option(value='3') 3
+              option(value='5') 5
+              option(value='10',selected="selected") 10
+            else
+              option(value='3') 3
+              option(value='5') 5
+              option(value='10') 10
           .input-group-append
-            button.btn.btn-outline-secondary(type='submit') Button
+            button.btn.btn-outline-secondary(type='submit') Сортировать
   each article in articles
     // Blog Post
     .card.my-4

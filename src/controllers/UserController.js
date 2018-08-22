@@ -4,7 +4,7 @@ const { User } = require('../models')
 
 module.exports.register = {
   Get (req, res) {
-    res.render('register')
+    res.render('user/register')
   },
   async Post (req, res, next) {
     try {
@@ -18,7 +18,7 @@ module.exports.register = {
 
 module.exports.login = {
   Get (req, res) {
-    res.render('login')
+    res.render('user/login')
   },
   Post (req, res, next) {
     req.flash('success', 'Аутентификация успешна.')
@@ -30,33 +30,3 @@ module.exports.logout = (req, res) => {
   req.logout()
   res.redirect('/')
 }
-
-/*
-bcrypt.genSalt(10, function(err, salt) {
-    bcrypt.hash("B4c0/\/", salt, function(err, hash) {
-        // Store hash in your password DB.
-    });
-});
-
-module.exports.post = (req, res, next) => {
-  // Finds the validation errors in this request and wraps them in an object with handy functions
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    res.render('register', {
-      errors: errors.array()
-    })
-  } else {
-    User.create({
-      name: req.body.name,
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-    })
-    req.flash('success', 'New User Created')
-    res.redirect('/')
-    User.findAll({}).then(users => {
-      console.log(users)
-    })
-  }
-}
-*/

@@ -1,9 +1,10 @@
 # Express sequelize Blog
-## With registration(hash password), authorization(passportJS), validation(express-validator) and paginate(express-paginate)
+## With registration (hash password), authorization (passportJS), validation (express-validator), paginate (express-paginate) and seed
 
 [Working Example](http://87.236.23.246/)  
 
 * "bcryptjs"  
+* "bluebird"  
 * "compression"  
 * "connect-flash"  
 * "cookie-parser"  

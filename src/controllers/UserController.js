@@ -30,3 +30,10 @@ module.exports.logout = (req, res) => {
   req.logout()
   res.redirect('/')
 }
+
+module.exports.users = async (req, res, next) => {
+  try {
+    let user = await User.findAll()
+    console.log(user)
+  } catch (err) { next(err) }
+}

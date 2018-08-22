@@ -9,6 +9,8 @@ const validation = require('./validation')
 // User Model
 const UserController = require('../controllers/UserController')
 
+router.get('/', UserController.users)
+
 // User Registration
 router.get('/register', UserController.register.Get)
 router.post('/register', [

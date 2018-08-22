@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
   let limit = req.query.limit || '3'
   let results
   try {
-    results = await Blog.findAndCountAll({limit: req.query.limit, offset: req.skip, order: [[sort, age]]})
+    results = await Blog.findAndCountAll({limit: req.query.limit, offset: req.skip, order: [[sort, age]], where: {active: true}})
     const itemCount = results.count
     const pageCount = Math.ceil(results.count / req.query.limit)
     res.render('index', {
@@ -69,7 +69,7 @@ router.get('/search/', async (req, res, next) => {
 
 // User routes
 const userRouter = require('./user')
-router.use('/', userRouter)
+router.use('/user/', userRouter)
 
 // Blog routes
 const blogRouter = require('./blog')

@@ -39,12 +39,12 @@ html(lang='en')
               li.nav-item.dropdown
                 a#dropdown01.nav-link.dropdown-toggle(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}
                 .dropdown-menu(aria-labelledby='dropdown01')
-                  a.dropdown-item(href='/logout/') Выйти
+                  a.dropdown-item(href='/user/logout/') Выйти
             else
               li.nav-item
-                a.nav-link(href='/register/') Регистрация
+                a.nav-link(href='/user/register/') Регистрация
               li.nav-item
-                a.nav-link(href='/login/') Войти
+                a.nav-link(href='/user/login/') Войти
             //li.nav-item
               a.nav-link(href='#') Services
             //li.nav-item

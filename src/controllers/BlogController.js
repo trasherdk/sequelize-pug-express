@@ -31,12 +31,8 @@ module.exports.add = {
   // Add Article Post
   async Post (req, res, next) {
     try {
-      await Blog.create({
-        author: req.user.id,
-        title: req.body.title,
-        text: req.body.text,
-        textFull: req.body.textFull
-      })
+      req.body.author = req.body.author || req.user.id
+      await Blog.create(req.body)
       req.flash('success', 'Изменения сохранены.')
       res.redirect('/')
     } catch (err) {

@@ -32,7 +32,8 @@ sequelize.sync({ force: false })
 
 module.exports = {
   Blog,
-  User
+  User,
+  sequelize
 }
 
 // module.exports.sequelize = sequelize

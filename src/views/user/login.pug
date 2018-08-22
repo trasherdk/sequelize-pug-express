@@ -3,7 +3,7 @@ block title
   h1.my-4 Login
 
 block content
-  form#form(action='/login/', onsubmit="return validation()", method="POST")
+  form#form(action='/user/login/', onsubmit="return validation()", method="POST")
     .form-group
       label(for='username') Введите Email или Имя пользователя
       input#username.form-control(type='text',name='username')

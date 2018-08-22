@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true
     },
     author: Sequelize.STRING,
-    title: Sequelize.STRING,
+    title: Sequelize.TEXT,
     text: Sequelize.TEXT,
     textFull: Sequelize.TEXT,
     active: { type: Sequelize.BOOLEAN, defaultValue: true }

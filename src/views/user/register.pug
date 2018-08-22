@@ -3,7 +3,7 @@ block title
   h1.my-4 Регистрация
 
 block content
-  form#form(action='/register/', onsubmit="return validation()", method="POST")
+  form#form(action='/user/register/', onsubmit="return validation()", method="POST")
     .form-group
       label(for='username') Имя пользователя
       input#username.form-control(type='text',name='username')

@@ -1,15 +1,17 @@
 {
   "name": "express-sequelize",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./src/bin/www --exec \"npm run lint && node\"",
     "develop": "DEBUG=express:* nodemon ./src/bin/www --exec \"npm run lint && node\"",
     "lint": "eslint ./src/*.js ./src/**/*.js",
-    "fix": "eslint --fix ./src/*.js ./src/**/*.js"
+    "fix": "eslint --fix ./src/*.js ./src/**/*.js",
+    "seed": "node ./data/seed"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bluebird": "^3.5.1",
     "compression": "^1.7.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",

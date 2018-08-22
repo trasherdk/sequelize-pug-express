@@ -7,7 +7,7 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 // const BlogController = require('../controllers/BlogController')
 
-router.use(paginate.middleware(3, 10))
+router.use(paginate.middleware(5, 10))
 
 // Index page
 router.get('/', async (req, res, next) => {
@@ -36,7 +36,7 @@ router.get('/', async (req, res, next) => {
 router.get('/search/', async (req, res, next) => {
   try {
     req.query.page = req.query.page || 1
-    req.skip = req.offset = (req.query.page * 10) - 10
+    req.skip = req.offset = (req.query.page * 5) - 5
     let search = req.query.val
     console.log(req.skip)
     let results = await Blog.findAndCountAll({
@@ -49,7 +49,7 @@ router.get('/search/', async (req, res, next) => {
           }
         }))
       },
-      limit: 10,
+      limit: 5,
       offset: req.skip
     })
     if (!results.count) {

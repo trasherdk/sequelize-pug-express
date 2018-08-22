@@ -12,7 +12,7 @@ module.exports.user = {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.render('register', {
+      return res.render('user/register', {
         errors: errors.array()
       })
     }
@@ -23,7 +23,7 @@ module.exports.user = {
         }
       })
       if (user) {
-        return res.render('register', {
+        return res.render('user/register', {
           error: 'Имя пользователя или Email уже используются'
         })
       } else {
@@ -37,7 +37,7 @@ module.exports.user = {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      res.render('login', {
+      res.render('user/login', {
         errors: errors.array()
       })
       console.log(errors)
@@ -52,7 +52,7 @@ module.exports.blog = {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      res.render('add_article', {
+      res.render('blog/add_article', {
         errors: errors.array()
       })
       console.log(errors)
@@ -64,7 +64,7 @@ module.exports.blog = {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      res.render('edit_article', {
+      res.render('blog/edit_article', {
         errors: errors.array()
       })
       console.log(errors)

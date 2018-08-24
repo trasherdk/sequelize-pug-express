@@ -18,10 +18,17 @@ module.exports.register = {
 
 module.exports.login = {
   Get (req, res) {
+    console.log(req.headers.referer)
     res.render('user/login')
   },
   Post (req, res, next) {
     req.flash('success', 'Аутентификация успешна.')
+    /*
+    if (req.headers.referer) {
+      return res.redirect
+    }
+    */
+    console.log(req.headers.referer)
     res.redirect('/')
   }
 }

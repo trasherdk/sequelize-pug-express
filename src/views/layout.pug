@@ -36,10 +36,10 @@ html(lang='en')
         #navbarResponsive.collapse.navbar-collapse
           ul.navbar-nav.ml-auto
             if user
-              li.nav-item.dropdown
-                a#dropdown01.nav-link.dropdown-toggle(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #{user.username}
-                .dropdown-menu(aria-labelledby='dropdown01')
-                  a.dropdown-item(href='/user/logout/') Выйти
+              //li.nav-item
+                a.nav-link(href='/user/') Профиль
+              li.nav-item
+                a.nav-link(href='/user/logout/') Выйти
             else
               li.nav-item
                 a.nav-link(href='/user/register/') Регистрация
@@ -74,10 +74,22 @@ html(lang='en')
           if user
             // Side Widget
             .card.my-4
+              h5.card-header Профиль
+              //img.card-img-top(src="https://placehold.it/300x300" alt="Card image cap")
+              .card-body
+                .row
+                  .col-12
+                    h6 Имя пользователя: #{user.username}
+                    h6 Email: #{user.email}
+                    h6 Ваши записи: 
+                      a(href="/search/?user="+user.id) Найти
+              a.btn.btn-outline-primary(href="/post/add/") Добавить запись
+          if user
+            // Side Widget
+            .card.my-4
               h5.card-header Виджет
               .card-body
                 block widget
-                  a.btn.btn-outline-primary(href="/post/add/") Добавить запись
           // Search Widget
           .card.my-4
             h5.card-header Поиск

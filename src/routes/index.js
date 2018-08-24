@@ -37,21 +37,35 @@ router.get('/search/', async (req, res, next) => {
   try {
     req.query.page = req.query.page || 1
     req.skip = req.offset = (req.query.page * 5) - 5
-    let search = req.query.val
-    console.log(req.skip)
-    let results = await Blog.findAndCountAll({
-      where: {
-        [Op.or]: [
-          'title', 'author', 'text', 'textFull'
-        ].map(key => ({
-          [key]: {
-            [Op.like]: `%${search}%`
-          }
-        }))
-      },
-      limit: 5,
-      offset: req.skip
-    })
+    let search, results
+    if (req.query.user) {
+      search = req.query.user
+      results = await Blog.findAndCountAll({
+        where: {
+          active: true,
+          author: search
+        },
+        limit: 5,
+        offset: req.skip
+      })
+    }
+    if (req.query.val) {
+      search = req.query.val
+      results = await Blog.findAndCountAll({
+        where: {
+          active: true,
+          [Op.or]: [
+            'title', 'text', 'textFull'
+          ].map(key => ({
+            [key]: {
+              [Op.like]: `%${search}%`
+            }
+          }))
+        },
+        limit: 5,
+        offset: req.skip
+      })
+    }
     if (!results.count) {
       results.notFound = 'По вашему запросу ничего не найдено'
     }

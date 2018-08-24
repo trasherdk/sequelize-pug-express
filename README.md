@@ -25,6 +25,8 @@
 * "sqlite3"  
 
 ```bash
+# Add some data with article and user
+npm run seed
 # Basic
 npm start
 # DEBUG

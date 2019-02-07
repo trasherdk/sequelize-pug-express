@@ -22,7 +22,7 @@ module.exports.login = {
     res.render('user/login')
   },
   Post (req, res, next) {
-    req.flash('success', 'Аутентификация успешна.')
+    req.flash('success', 'Authentication successful.')
     /*
     if (req.headers.referer) {
       return res.redirect

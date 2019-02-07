@@ -18,9 +18,9 @@
 * [express](https://www.npmjs.com/package/express):  
    - [express-messages](https://www.npmjs.com/package/express-messages)  The express-messages module provides flash notification rendering.  
    - [express-paginate](https://www.npmjs.com/package/express-paginate)  
-   - [express-session](https://www.npmjs.com/package/express-session):
-      <details><summary>express-session warnings</summary> 
-        <p>
+   - [express-session](https://www.npmjs.com/package/express-session)
+      <details>
+        <summary>express-session warnings</summary> 
           <p>
             **Note** Since version 1.5.0, the [cookie-parser middleware](https://www.npmjs.com/package/cookie-parser) no longer needs to be used for this module to work. This module now directly reads and writes cookies on req/res. Using cookie-parser may result in issues if the secret is not the same between this module and cookie-parser.  
           </p>
@@ -30,9 +30,8 @@
           <p>
             For a list of stores, see [compatible session stores](https://www.npmjs.com/package/express-session#compatible-session-stores).  
           </p>
-        </p>
-     </details>  
-    - [express-validator](https://www.npmjs.com/package/express-validator)  
+      </details>  
+   - [express-validator](https://www.npmjs.com/package/express-validator)  
 * [http-errors](https://www.npmjs.com/package/http-errors) Create HTTP errors for Express, Koa, Connect, etc. with ease.  
 * [morgan](https://www.npmjs.com/package/morgan) HTTP request logger middleware for node.js  
 * [mysql2](https://www.npmjs.com/package/mysql2) MySQL client for Node.js with focus on performance.   

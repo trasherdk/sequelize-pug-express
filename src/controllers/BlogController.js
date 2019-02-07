@@ -33,7 +33,7 @@ module.exports.add = {
     try {
       req.body.author = req.body.author || req.user.id
       await Blog.create(req.body)
-      req.flash('success', 'Изменения сохранены.')
+      req.flash('success', 'Changes saved.')
       res.redirect('/')
     } catch (err) {
       next(createError(err))
@@ -48,7 +48,7 @@ module.exports.edit = {
     try {
       const article = await Blog.findOne({ where: { active: true, uuid: req.params.id } })
       if (String(article.author) !== String(req.user.id)) {
-        req.flash('danger', 'Пожалуйста, авторизируйтесь или создайте учетную запись.')
+        req.flash('danger', 'Please login or create an account.')
         res.redirect('/login/')
       } else {
         res.render('blog/edit_article', {
@@ -63,7 +63,7 @@ module.exports.edit = {
   async Post (req, res, next) {
     try {
       await Blog.update(req.body, { where: { uuid: req.params.id } })
-      req.flash('success', 'Изменения сохранены.')
+      req.flash('success', 'Changes saved.')
       res.redirect('/post/' + req.params.id)
     } catch (err) {
       next(createError(err))

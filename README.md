@@ -7,11 +7,11 @@
 * [bluebird](https://www.npmjs.com/package/bluebird)  
    - [bluebird website](http://bluebirdjs.com/docs/getting-started.html)  
 * [compression](https://www.npmjs.com/package/compression)  
-* [connect-flash](https://www.npmjs.com/package/connect-flash)  
-   <details><summary>connect-flash description</summary>
-     <p>
-       The flash is a special area of the session used for storing messages. Messages are written to the flash and cleared after       being displayed to the user. The flash is typically used in combination with redirects, ensuring that the message is available  to the next page that is to be rendered.
-     </p>
+* [connect-flash](https://www.npmjs.com/package/connect-flash) <details>
+   <summary>connect-flash description</summary>
+   
+     <p>The __flash__ is a special area of the session used for storing messages. Messages are written to the flash and cleared after
+        being displayed to the user. The flash is typically used in combination with redirects, ensuring that the message is available  to the next page that is to be rendered.</p>
    </details>  
 * [cookie-parser](https://www.npmjs.com/package/cookie-parser)  
 * [debug](https://www.npmjs.com/package/debug)  
